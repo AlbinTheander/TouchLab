@@ -44,4 +44,10 @@
         android:layout_above="@id/icons"
         android:text="@string/available_gestures_label" />
 
+<android.gesture.GestureOverlayView
+    android:id="@+id/gesture_overlay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gestureStrokeType="single" />
+
 </RelativeLayout>

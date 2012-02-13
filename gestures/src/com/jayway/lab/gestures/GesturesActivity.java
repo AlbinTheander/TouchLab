@@ -1,11 +1,15 @@
 package com.jayway.lab.gestures;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 import android.app.Activity;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
+import android.gesture.GestureOverlayView;
+import android.gesture.GestureOverlayView.OnGesturePerformedListener;
+import android.gesture.Prediction;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,11 +18,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class GesturesActivity extends Activity {
+public class GesturesActivity extends Activity implements OnGesturePerformedListener {
 
 	private EditText text;
 	private LinearLayout iconLayout;
 	private GestureLibrary gestureLib;
+	private GestureOverlayView gesturesView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,8 @@ public class GesturesActivity extends Activity {
 		setContentView(R.layout.main);
 		text = (EditText) findViewById(R.id.text);
 		iconLayout = (LinearLayout) findViewById(R.id.icons);
+gesturesView = (GestureOverlayView) findViewById(R.id.gesture_overlay);
+gesturesView.addOnGesturePerformedListener(this);
 		loadGestures();
 	}
 
@@ -61,5 +68,12 @@ public class GesturesActivity extends Activity {
 		imageView.setImageBitmap(icon);
 		iconLayout.addView(imageView);
 	}
+
+@Override
+public void onGesturePerformed(GestureOverlayView view, Gesture gesture) {
+	ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
+	Prediction best = predictions.get(0);
+	text.append(best.name);
+}
 
 }
