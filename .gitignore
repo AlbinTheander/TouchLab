@@ -1,7 +1,5 @@
 target
-.project
 .settings
-.classpath
 gen
 bin
 .fbprefs
