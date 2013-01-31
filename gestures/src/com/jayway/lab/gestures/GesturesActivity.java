@@ -18,7 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class GesturesActivity extends Activity implements OnGesturePerformedListener {
+public class GesturesActivity extends Activity implements
+		OnGesturePerformedListener {
 
 	private EditText text;
 	private LinearLayout iconLayout;
@@ -31,8 +32,8 @@ public class GesturesActivity extends Activity implements OnGesturePerformedList
 		setContentView(R.layout.main);
 		text = (EditText) findViewById(R.id.text);
 		iconLayout = (LinearLayout) findViewById(R.id.icons);
-gesturesView = (GestureOverlayView) findViewById(R.id.gesture_overlay);
-gesturesView.addOnGesturePerformedListener(this);
+		gesturesView = (GestureOverlayView) findViewById(R.id.gesture_overlay);
+		gesturesView.addOnGesturePerformedListener(this);
 		loadGestures();
 	}
 
@@ -40,21 +41,22 @@ gesturesView.addOnGesturePerformedListener(this);
 		gestureLib = GestureLibraries.fromRawResource(this, R.raw.gestures);
 		gestureLib.load();
 		Set<String> entries = gestureLib.getGestureEntries();
-		for(String entry: entries) {
+		for (String entry : entries) {
 			Gesture gesture = gestureLib.getGestures(entry).get(0);
 			Bitmap icon = gesture.toBitmap(50, 50, 3, Color.YELLOW);
 			addGestureIcon(icon);
 		}
-		
+
 	}
 
 	/**
-	 * resets the text view showing the input from the gestures. Used from the XML.
+	 * resets the text view showing the input from the gestures. Used from the
+	 * XML.
 	 * 
 	 * @param view
 	 */
 	public void reset(View view) {
-		text.setText("");
+		text.setText("Albin");
 	}
 
 	/**
@@ -69,11 +71,10 @@ gesturesView.addOnGesturePerformedListener(this);
 		iconLayout.addView(imageView);
 	}
 
-@Override
-public void onGesturePerformed(GestureOverlayView view, Gesture gesture) {
-	ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
-	Prediction best = predictions.get(0);
-	text.append(best.name);
-}
+	public void onGesturePerformed(GestureOverlayView view, Gesture gesture) {
+		ArrayList<Prediction> predictions = gestureLib.recognize(gesture);
+		Prediction best = predictions.get(0);
+		text.append(best.name);
+	}
 
 }
